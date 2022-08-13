@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bmp-jeopardy-management-service
+  namespace: dtag-dev
+  labels:
+    app: bmp-jeopardy-management-service
+    version: latest
+spec:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 18902
+    nodePort: 30903
+    targetPort: 9006
+    protocol: TCP
+  selector:
+    app: bmp-jeopardy-management-service
+    version: latest

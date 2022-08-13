@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bmp-jeopardy-management-service
+  namespace: dtag-dev
+  labels:
+    app: bmp-jeopardy-management-service
+    version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bmp-jeopardy-management-service
+      version: latest
+  template:
+    metadata:
+      name: bmp-jeopardy-management-service
+      labels:
+        app: bmp-jeopardy-management-service
+        version: latest
+    spec:
+      containers:
+      - name: bmp-jeopardy-management-service
+        image: 10.0.5.16:5000/bm/bmp-jeopardy-management-service:latest
+        args: ["--spring.profiles.active=onap"]
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: onap
+        resources:
+          requests:
+            cpu: 200m
+            memory: 0.5Gi
+        ports:
+        - containerPort: 9006
